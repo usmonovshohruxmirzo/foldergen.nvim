@@ -66,7 +66,7 @@ function M.generate_from_text()
       end)
 
       if not success then
-        print("Could not create: " .. path .. " (" .. err .. ")")
+        print("Could not create")
       end
     end
   end
