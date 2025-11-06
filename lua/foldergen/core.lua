@@ -66,7 +66,7 @@ function M.generate_from_text()
       end)
 
       if not success then
-        print("Could not create")
+        print("Could not generate folder structure")
       end
     end
   end
