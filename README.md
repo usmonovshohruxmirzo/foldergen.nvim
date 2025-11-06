@@ -1,1 +1,1 @@
-"# foldergen.nvim" 
+# foldergen.nvim 
