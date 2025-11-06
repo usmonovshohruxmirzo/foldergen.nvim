@@ -19,8 +19,20 @@ end
 
 function M.generate_from_text()
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  local cwd = vim.fn.getcwd()
 
+  local has_content = false
+  for _, line in ipairs(lines) do
+    if clean_line(line) ~= "" then
+      has_content = true
+      break
+    end
+  end
+  if not has_content then
+    print("Buffer is empty! Please paste your tree structure first.")
+    return
+  end
+
+  local cwd = vim.fn.getcwd()
   local stack = { { path = cwd, depth = -1 } }
 
   for _, line in ipairs(lines) do
