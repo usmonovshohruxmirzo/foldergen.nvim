@@ -167,7 +167,7 @@ This shows that `foldergen.nvim` can handle **deeply nested and complex project 
 
 ## Notes
 
-* **Files**: Lines with extensions (e.g., `.js`, `.html`) are created as empty files.
+* **Files**: Lines with extensions (`.txt`, `.md`) are created as empty files.
 * **Folders**: Lines without extensions are created as directories.
 * **Comments**: Lines starting with `#` or trailing `# comment` are ignored.
 * **Indentation**: Supports spaces and tree characters (`│ ├ └ ─`).
