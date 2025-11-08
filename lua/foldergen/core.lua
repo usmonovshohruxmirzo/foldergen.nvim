@@ -2,7 +2,7 @@
 local M = {}
 
 local function is_file(name)
-  return name:match("^.+%..+$") ~= nil
+  return name:match("^.+%.txt$") or name:match("^.+%.md$")
 end
 
 local function clean_line(line)
@@ -53,19 +53,23 @@ function M.generate_from_text()
     local clean = clean_line(line)
     if clean ~= "" then
       local depth = count_indent(line)
+
       while stack[#stack].depth >= depth do
         table.remove(stack)
       end
+
       local parent_path = stack[#stack].path
       local path = parent_path .. "/" .. clean
+
       local success = pcall(function()
-        if is_file(path) then
+        if is_file(clean) then
           vim.fn.writefile({}, path)
         else
           vim.fn.mkdir(path, "p")
           table.insert(stack, { path = path, depth = depth })
         end
       end)
+
       if not success then
         error_occurred = true
       end
