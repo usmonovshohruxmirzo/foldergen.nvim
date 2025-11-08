@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-global
+
 local M = {}
 
 local function is_file(name)
@@ -35,6 +36,7 @@ function M.generate_from_text()
   end
 
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
   if #lines == 0 then
     print("Buffer is empty! Please paste your tree structure first.")
     return
@@ -59,7 +61,7 @@ function M.generate_from_text()
       local parent_path = stack[#stack].path
       local path = parent_path .. "/" .. clean
       local success = pcall(function()
-        if is_file(path) then
+        if is_file(clean) then
           vim.fn.writefile({}, path)
         else
           vim.fn.mkdir(path, "p")
