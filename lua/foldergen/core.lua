@@ -2,7 +2,7 @@
 local M = {}
 
 local function is_file(name)
-  return name:match("^.+%.txt$") or name:match("^.+%.md$")
+  return name:match("^.+%..+$") ~= nil
 end
 
 local function clean_line(line)
@@ -12,16 +12,10 @@ local function clean_line(line)
   return line
 end
 
-local function tree_depth(line)
-  local depth = 0
-  for c in line:gmatch(".") do
-    if c == "│" or c == "├" or c == "└" then
-      depth = depth + 1
-    else
-      break
-    end
-  end
-  return depth
+local function count_indent(line)
+  local clean = line:gsub("[│├└─]", "")
+  local _, count = clean:find("^%s*")
+  return count or 0
 end
 
 local function is_tree_style(lines)
@@ -58,24 +52,20 @@ function M.generate_from_text()
   for _, line in ipairs(lines) do
     local clean = clean_line(line)
     if clean ~= "" then
-      local depth = tree_depth(line)
-
+      local depth = count_indent(line)
       while stack[#stack].depth >= depth do
         table.remove(stack)
       end
-
       local parent_path = stack[#stack].path
       local path = parent_path .. "/" .. clean
-
       local success = pcall(function()
-        if is_file(clean) then
+        if is_file(path) then
           vim.fn.writefile({}, path)
         else
           vim.fn.mkdir(path, "p")
           table.insert(stack, { path = path, depth = depth })
         end
       end)
-
       if not success then
         error_occurred = true
       end
