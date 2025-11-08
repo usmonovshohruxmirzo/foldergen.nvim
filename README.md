@@ -165,15 +165,6 @@ This shows that `foldergen.nvim` can handle **deeply nested and complex project 
 
 ---
 
-## Messages
-
-* Success: `Tree-style folder structure generated successfully!`
-* Empty buffer: `Buffer is empty! Please paste your tree structure first.`
-* Invalid input: `No tree-style structure detected. Generation skipped.`
-* Folder/file creation errors: `Could not create: <path> (<error message>)`
-
----
-
 ## Notes
 
 * **Files**: Lines with extensions (e.g., `.js`, `.html`) are created as empty files.
